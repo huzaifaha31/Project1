@@ -44,12 +44,71 @@
             margin: 0 auto;
         }
 
-        /* --- Search Bar & Clear Button Styling --- */
+        /* --- Navigation Button Styles (New) --- */
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #FEFBF1;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button, .back-button {
+            background-color: #D4A57F; /* Tan/Brown */
+            color: #3C1E1B;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 4px #964B00; /* Darker brown shadow */
+            text-align: center;
+            flex: 1 1 200px; /* Flexible width */
+            max-width: 300px;
+            font-family: 'Merriweather', serif;
+        }
+
+        .nav-button:hover, .back-button:hover {
+            background-color: #E6B88A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px #964B00;
+        }
+        
+        .back-button {
+            background-color: #A52A2A; /* Brick Red */
+            color: white;
+            box-shadow: 0 4px #8B0000;
+            max-width: 150px;
+        }
+
+        .back-button:hover {
+            background-color: #C24242;
+            box-shadow: 0 6px #8B0000;
+        }
+
+        .view-title {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4A2A0C;
+            border-bottom: 2px solid #D4A57F;
+            padding-bottom: 10px;
+        }
+
+        /* --- Search Bar & Clear Button Styling (Hidden initially) --- */
         .search-container {
             margin-bottom: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
+            /* Hide by default, shown only in remedy view */
+            display: none; 
         }
 
         #search-input {
@@ -100,7 +159,7 @@
             background-color: #FFF0F0;
         }
 
-        /* --- Disease Section Styling --- */
+        /* --- Disease Section Styling (Remedy View) --- */
         .disease-section {
             margin-bottom: 40px;
             padding: 30px;
@@ -151,11 +210,6 @@
             flex-direction: column;
         }
 
-        .remedy-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
         .remedy-image-placeholder {
             height: 120px;
             margin-bottom: 15px;
@@ -178,26 +232,11 @@
         }
 
         /* Specific colors/icons for categories (simulating illustrations) */
-        .remedy-image-placeholder[data-id="A"] { /* Kelesuan/Sakit Sendi */
-            background-color: #F0FFF0; 
-            border-left: 5px solid #006400; /* Dark Green */
-        }
-        .remedy-image-placeholder[data-id="B"] { /* Rawatan Dalaman */
-            background-color: #FFF5EE; 
-            border-left: 5px solid #FFA500; /* Orange */
-        }
-        .remedy-image-placeholder[data-id="C"] { /* Penyakit Kanak-Kanak */
-            background-color: #FFF0F5; 
-            border-left: 5px solid #FF69B4; /* Hot Pink */
-        }
-        .remedy-image-placeholder[data-id="D"] { /* Penyakit Wanita */
-            background-color: #FAEBD7; 
-            border-left: 5px solid #8B008B; /* Dark Magenta */
-        }
-        .remedy-image-placeholder[data-id="G"] { /* Basal */
-            background-color: #FDF5E6; 
-            border-left: 5px solid #00008B; /* Dark Blue */
-        }
+        .remedy-image-placeholder[data-id="A"] { border-left: 5px solid #006400; }
+        .remedy-image-placeholder[data-id="B"] { border-left: 5px solid #FFA500; }
+        .remedy-image-placeholder[data-id="C"] { border-left: 5px solid #FF69B4; }
+        .remedy-image-placeholder[data-id="D"] { border-left: 5px solid #8B008B; }
+        .remedy-image-placeholder[data-id="G"] { border-left: 5px solid #00008B; }
 
         .remedy-card h3 {
             color: #8B0000;
@@ -259,6 +298,10 @@
             .category-tag {
                 margin-top: 10px;
             }
+            .nav-button, .back-button {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
             .search-container {
                 flex-direction: column;
             }
@@ -283,13 +326,19 @@
     </header>
 
     <main id="manuscript-data-container">
-        <!-- Search Bar with Clear Button -->
-        <div class="search-container">
-            <input type="text" id="search-input" placeholder="Cari penyakit, bahan, atau ID..." onkeyup="filterRemedies()">
+        <!-- Search Bar (Visible only in Remedy View) -->
+        <div class="search-container" id="search-bar">
+            <input type="text" id="search-input" placeholder="Cari bahan atau ID resipi..." onkeyup="filterRemedies()">
             <button id="clear-search-btn" onclick="clearSearch()">X</button>
         </div>
         
-        <div id="disease-list"></div>
+        <div id="navigation-area">
+            <!-- Back button and title will appear here -->
+        </div>
+
+        <div id="disease-list">
+            <!-- Content will be rendered here -->
+        </div>
     </main>
 
     <footer>
@@ -446,20 +495,125 @@
         `;
         
         let medicalData = []; 
+        let hierarchicalData = {};
         
+        // State variables for navigation
+        let currentView = 'classification'; // 'classification', 'disease', 'remedy'
+        let selectedClassification = '';
+        let selectedRemedyGroup = null;
+
         document.addEventListener('DOMContentLoaded', () => {
             try {
-                // Parse the embedded JSON string
                 medicalData = JSON.parse(JSON_DATA_STRING.trim());
-                renderRemedies(medicalData);
+                hierarchicalData = createHierarchicalData(medicalData);
+                showClassificationView();
             } catch (e) {
                 console.error("Failed to parse JSON data:", e);
-                document.getElementById('disease-list').innerHTML = '<p class="no-results" style="border-color: red;">Error: Failed to load manuscript data.</p>';
+                document.getElementById('disease-list').innerHTML = '<p class="no-results" style="border-color: red;">Ralat: Gagal memuatkan data manuskrip.</p>';
             }
 
-            // Initial state for clear button
-            document.getElementById('clear-search-btn').style.display = 'none';
+            // Initial state for search bar
+            document.getElementById('search-bar').style.display = 'none';
         });
+
+        // Function to create the new hierarchical structure
+        function createHierarchicalData(flatData) {
+            const classificationMap = {
+                // Map the category code to a logical body part/classification
+                'A': 'Umum / Otot & Sendi',
+                'B': 'Sistem Pencernaan',
+                'C': 'Kanak-Kanak', // Grouped by demography/specific type of illness
+                'D': 'Sistem Pencernaan / Wanita',
+                'G': 'Kulit',
+            };
+
+            const hierarchicalMap = {};
+
+            flatData.forEach(group => {
+                const classification = classificationMap[group.category_code.charAt(0)] || 'Lain-Lain';
+                
+                if (!hierarchicalMap[classification]) {
+                    hierarchicalMap[classification] = [];
+                }
+                hierarchicalMap[classification].push(group);
+            });
+
+            return hierarchicalMap;
+        }
+
+        /* --- Navigation Functions --- */
+
+        function showClassificationView() {
+            currentView = 'classification';
+            selectedClassification = '';
+            selectedRemedyGroup = null;
+            document.getElementById('search-bar').style.display = 'none';
+            document.getElementById('navigation-area').innerHTML = '<h2 class="view-title">1. Pilih Klasifikasi Tubuh Badan</h2>';
+            const container = document.getElementById('disease-list');
+            container.innerHTML = '';
+
+            const navContainer = document.createElement('div');
+            navContainer.className = 'nav-container';
+
+            Object.keys(hierarchicalData).forEach(classification => {
+                const button = document.createElement('button');
+                button.className = 'nav-button';
+                button.textContent = classification;
+                button.onclick = () => showDiseaseView(classification);
+                navContainer.appendChild(button);
+            });
+
+            container.appendChild(navContainer);
+        }
+
+        function showDiseaseView(classification) {
+            currentView = 'disease';
+            selectedClassification = classification;
+            document.getElementById('search-bar').style.display = 'none';
+            const container = document.getElementById('disease-list');
+            container.innerHTML = '';
+
+            // Add Back Button and Title
+            document.getElementById('navigation-area').innerHTML = `
+                <button class="back-button" onclick="showClassificationView()">← Kembali</button>
+                <h2 class="view-title">2. Pilih Penyakit untuk ${classification}</h2>
+            `;
+            
+            const navContainer = document.createElement('div');
+            navContainer.className = 'nav-container';
+
+            const diseaseGroups = hierarchicalData[classification] || [];
+            diseaseGroups.forEach(group => {
+                const button = document.createElement('button');
+                button.className = 'nav-button';
+                button.textContent = group.disease;
+                button.onclick = () => showRemedyCards(group);
+                navContainer.appendChild(button);
+            });
+
+            container.appendChild(navContainer);
+        }
+
+        function showRemedyCards(group) {
+            currentView = 'remedy';
+            selectedRemedyGroup = group;
+            
+            // Show search bar and reset it
+            document.getElementById('search-bar').style.display = 'flex';
+            document.getElementById('search-input').value = '';
+            document.getElementById('clear-search-btn').style.display = 'none';
+            
+            // Add Back Button and Title
+            document.getElementById('navigation-area').innerHTML = `
+                <button class="back-button" onclick="showDiseaseView('${selectedClassification}')">← Kembali</button>
+                <h2 class="view-title">3. Resipi untuk: ${group.disease}</h2>
+            `;
+
+            renderRemedies([group]); // Render the remedies for the selected group
+        }
+
+
+        /* --- Rendering and Filtering Functions (Adapted) --- */
 
         function renderRemedies(data) {
             const container = document.getElementById('disease-list');
@@ -467,16 +621,14 @@
 
             data.forEach(diseaseGroup => {
                 if (diseaseGroup.remedies && diseaseGroup.remedies.length > 0) {
-                    const diseaseSection = document.createElement('section');
-                    diseaseSection.className = 'disease-section';
-                    diseaseSection.innerHTML = `
-                        <h2>${diseaseGroup.disease} <span class="category-tag">${diseaseGroup.category_code}</span></h2>
+                    // Check if the current view is 'remedy' before applying section styling
+                    const sectionContent = `
                         <div class="remedies-grid">
                             ${diseaseGroup.remedies.map(remedy => `
                                 <div class="remedy-card">
-                                    <div class="remedy-image-placeholder" data-id="${diseaseGroup.category_code}"></div>
+                                    <div class="remedy-image-placeholder" data-id="${diseaseGroup.category_code.charAt(0)}"></div>
                                     
-                                    <h3>Remedy ID: ${remedy.id_kod}</h3>
+                                    <h3>ID Resipi: ${remedy.id_kod}</h3>
                                     <div class="remedy-detail">
                                         <strong>Bahan Digunakan (Ingredients):</strong>
                                         <p>${remedy.ingredients}</p>
@@ -497,66 +649,60 @@
                             `).join('')}
                         </div>
                     `;
+                    
+                    const diseaseSection = document.createElement('section');
+                    diseaseSection.className = 'disease-section';
+                    diseaseSection.innerHTML = `
+                        <h2>${diseaseGroup.disease} <span class="category-tag">${diseaseGroup.category_code}</span></h2>
+                        ${sectionContent}
+                    `;
+
                     container.appendChild(diseaseSection);
                 }
             });
             
             // Display a message if no results are found
             if (container.children.length === 0) {
-                 container.innerHTML = '<p class="no-results">Tiada hasil yang sepadan dengan carian anda.</p>';
+                 container.innerHTML = '<p class="no-results">Tiada resipi yang sepadan dengan carian anda.</p>';
             }
         }
         
         function filterRemedies() {
+            // Only run filtering if the user is in the final remedy card view
+            if (currentView !== 'remedy' || !selectedRemedyGroup) return; 
+
             const input = document.getElementById('search-input');
             const clearBtn = document.getElementById('clear-search-btn');
             const filterText = input.value.toLowerCase().trim();
 
-            // Toggle clear button visibility
             clearBtn.style.display = filterText ? 'block' : 'none';
             
             if (filterText === "") {
-                renderRemedies(medicalData);
+                renderRemedies([selectedRemedyGroup]);
                 return;
             }
 
-            const filteredData = medicalData.map(diseaseGroup => {
-                const diseaseMatch = diseaseGroup.disease.toLowerCase().includes(filterText);
+            const filteredRemedies = selectedRemedyGroup.remedies.filter(remedy => {
+                const searchFields = [
+                    remedy.ingredients, 
+                    remedy.id_kod, 
+                    remedy.preparation_method,
+                    remedy.method_of_use,
+                    remedy.spells_or_verses
+                ].join(' ').toLowerCase(); 
+                
+                return searchFields.includes(filterText);
+            });
 
-                const filteredRemedies = diseaseGroup.remedies.filter(remedy => {
-                    // Search across all text fields of the remedy
-                    const searchFields = [
-                        remedy.ingredients, 
-                        remedy.id_kod, 
-                        remedy.preparation_method,
-                        remedy.method_of_use,
-                        remedy.spells_or_verses,
-                        diseaseGroup.disease
-                    ].join(' ').toLowerCase(); 
-                    
-                    return searchFields.includes(filterText);
-                });
-
-                // Logic: 
-                // 1. If the disease name matches, show the entire group of remedies.
-                // 2. Otherwise, if there are matching remedies inside, show only those remedies.
-                if (diseaseMatch) {
-                    return {...diseaseGroup, remedies: diseaseGroup.remedies};
-                } else if (filteredRemedies.length > 0) {
-                    // Create a new group object with only the filtered remedies
-                    return {...diseaseGroup, remedies: filteredRemedies};
-                }
-                return null;
-
-            }).filter(group => group !== null); // Remove groups that have no matches
-
-            renderRemedies(filteredData);
+            // Create a temporary group for rendering the filtered results
+            const filteredGroup = {...selectedRemedyGroup, remedies: filteredRemedies};
+            renderRemedies([filteredGroup]);
         }
 
         function clearSearch() {
             document.getElementById('search-input').value = '';
             document.getElementById('clear-search-btn').style.display = 'none';
-            filterRemedies(); // Re-render all data
+            filterRemedies(); // Re-render the unfiltered remedies for the current group
         }
     </script>
 </body>
