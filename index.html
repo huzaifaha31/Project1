@@ -14,8 +14,6 @@
             background-color: #F8F4E3; /* Light parchment/cream color */
             color: #3C1E1B; /* Dark maroon/brown text */
             line-height: 1.6;
-            /* Placeholder for a textured background image (since external files are disallowed) */
-            /* The color itself provides the "parchment" feel */
         }
 
         header {
@@ -301,108 +299,150 @@
     <script>
         // Embedded JSON Data
         const JSON_DATA_STRING = `
-            [
-                {
-                    "disease": "Kelesuan/Sakit Sendi (Fatigue/Joint Pain)",
-                    "category_code": "A",
-                    "remedies": [
-                        {
-                            "id_kod": "2999.A.01.F.01",
-                            "ingredients": "Sirih, cekur, lambuknya dan kunyit",
-                            "preparation_method": "Pipis lumat-lumat, biarkan semalaman.",
-                            "method_of_use": "Bedakkan pada tempat letih, 3 hari.",
-                            "spells_or_verses": "14x gagang sirih, cekur, lambuknya, mata kunyit."
-                        },
-                        {
-                            "id_kod": "2999.A.04.F.01",
-                            "ingredients": "Daun maman, daun saga, akar cemanggi, air cuka",
-                            "preparation_method": "Pipis bahan dan beri air cuka.",
-                            "method_of_use": "Ratakan di tempat yang sakit.",
-                            "spells_or_verses": "Daun maman segenggam erat, daun saga segenggam erat."
-                        }
-                    ]
-                },
-                {
-                    "disease": "Rawatan Dalaman/Pencernaan (Internal/Digestive Treatment)",
-                    "category_code": "B",
-                    "remedies": [
-                        {
-                            "id_kod": "2999.B.01.F.01",
-                            "ingredients": "Kacang hijau dan pucuk rotan",
-                            "preparation_method": "Diapit giling lumat-lumat, beri air pati santan kelapa, campurkan semuanya.",
-                            "method_of_use": "Minum 3 pagi.",
-                            "spells_or_verses": "Kacang hijau segenggam tarik, pucuk rotan."
-                        },
-                        {
-                            "id_kod": "2999.B.01.F.02",
-                            "ingredients": "Adas manis, pulasari, bawang merah, kelapa tua dan daun kiwir",
-                            "preparation_method": "Giling lumat-lumat.",
-                            "method_of_use": "Minum 3 pagi.",
-                            "spells_or_verses": "Bawang merah dibambam, kelapa tua dibakar."
-                        }
-                    ]
-                },
-                {
-                    "disease": "Penyakit Kanak-Kanak (Children's Illnesses)",
-                    "category_code": "C",
-                    "remedies": [
-                        {
-                            "id_kod": "2999.C.01.F.01",
-                            "ingredients": "Pinang muda, adas manis dan pulasari",
-                            "preparation_method": "Giling lumat-lumat, Bagi budak-budak: enapkan dahulu.",
-                            "method_of_use": "Minum.",
-                            "spells_or_verses": "Pinang muda yang belum bertemu hati, campur dengan adas manis dan pulosari."
-                        },
-                        {
-                            "id_kod": "2999.C.02.F.01",
-                            "ingredients": "Kapur laga, cengkih, kulit manis",
-                            "preparation_method": "Giling lumat-lumat beri air madu.",
-                            "method_of_use": "Minum (Untuk budak kecil).",
-                            "spells_or_verses": ""
-                        }
-                    ]
-                },
-                {
-                    "disease": "Penyakit Wanita/Sakit Perut/Senggugut (Women's/Abdominal Illnesses)",
-                    "category_code": "D",
-                    "remedies": [
-                        {
-                            "id_kod": "2999.D.04.F.06",
-                            "ingredients": "Ibu kunyit, liyak merah, garam siam",
-                            "preparation_method": "Giling lumat-lumat, air limau nipis.",
-                            "method_of_use": "Makan ketika senggugut.",
-                            "spells_or_verses": ""
-                        },
-                        {
-                            "id_kod": "2999.D.06.F.01",
-                            "ingredients": "Limau nipis, kapur tohor",
-                            "preparation_method": "Bubuh kapur tohor pada keratan limau nipis.",
-                            "method_of_use": "Taruh pada ulu hati.",
-                            "spells_or_verses": "Baca Surah Al-Kauthar sehingga 3 kali / 7 kali."
-                        },
-                        {
-                            "id_kod": "2999.D.06.NF.01",
-                            "ingredients": "Air",
-                            "preparation_method": "Ambil mangkuk putih, bubuh air.",
-                            "method_of_use": "Minum.",
-                            "spells_or_verses": "Baca Surah Al-Furqan ayat 32 dan Surah Al-Isra ayat 105-106."
-                        }
-                    ]
-                },
-                {
-                    "disease": "Basal (A Specific Ailment)",
-                    "category_code": "G",
-                    "remedies": [
-                        {
-                            "id_kod": "2999.G.01.F.01",
-                            "ingredients": "Bawang putih, cabai jawa, lada sulah, buah pala",
-                            "preparation_method": "Pipis lumat-lumat, gelek.",
-                            "method_of_use": "Makan 7 hari.",
-                            "spells_or_verses": "Semuanya berat seemas."
-                        }
-                    ]
-                }
-            ]
+[
+    {
+        "disease": "Kelesuan/Sakit Sendi & Badan (Fatigue/Joint & Body Pain)",
+        "category_code": "A",
+        "remedies": [
+            {
+                "id_kod": "2999.A.01.F.01",
+                "ingredients": "Sirih, cekur, lambuknya dan kunyit",
+                "preparation_method": "Pipis lumat-lumat, biarkan semalaman.",
+                "method_of_use": "Bedakkan pada tempat letih, 3 hari.",
+                "spells_or_verses": "14x gagang sirih, cekur, lambuknya, mata kunyit."
+            },
+            {
+                "id_kod": "2999.A.02.F.01",
+                "ingredients": "Buah kemunting, akar semambu, adas, pucuk pulasari, bawang putih, jintan putih dan beras pulut",
+                "preparation_method": "Giling lumat-lumat",
+                "method_of_use": "Bedakkan pada tubuh.",
+                "spells_or_verses": "Buah kemunting 7x7, akar semambu segenggam erat, adas..."
+            },
+            {
+                "id_kod": "2999.A.03.F.01",
+                "ingredients": "Pucuk hawar, cuka",
+                "preparation_method": "Rendam dalam cuka, rebus, tapis.",
+                "method_of_use": "Minum airnya pagi-pagi sebelum makan nasi, 7 hari.",
+                "spells_or_verses": "Jangan makan lemak, manis dan masam hingga yang kelat."
+            },
+            {
+                "id_kod": "2999.A.04.F.01",
+                "ingredients": "Daun maman, daun saga, akar cemanggi, air cuka",
+                "preparation_method": "Pipis bahan dan beri air cuka.",
+                "method_of_use": "Ratakan di tempat yang sakit.",
+                "spells_or_verses": "Daun maman segenggam erat, daun saga segenggam erat."
+            },
+            {
+                "id_kod": "2999.A.05.F.01",
+                "ingredients": "Daun gandarusa, jintan, jintan hitam, bonglai, hujung lambuknya, mata kunyit",
+                "preparation_method": "Pipis, dipais kira-kira hangat sedikit.",
+                "method_of_use": "Ratakan pada pinggang.",
+                "spells_or_verses": "Bonglai 3 hiris, mata kunyit air bermalam. Jintan dengan tangan kiri menghadap kelaut."
+            }
+        ]
+    },
+    {
+        "disease": "Rawatan Dalaman & Pencernaan (Internal & Digestive Treatment)",
+        "category_code": "B",
+        "remedies": [
+            {
+                "id_kod": "2999.B.01.F.01",
+                "ingredients": "Kacang hijau dan pucuk rotan",
+                "preparation_method": "Diapit giling lumat-lumat, beri air pati santan kelapa, campurkan semuanya.",
+                "method_of_use": "Minum 3 pagi.",
+                "spells_or_verses": "Kacang hijau segenggam tarik, pucuk rotan."
+            },
+            {
+                "id_kod": "2999.B.01.F.02",
+                "ingredients": "Adas manis, pulasari, bawang merah, kelapa tua dan daun kiwir",
+                "preparation_method": "Giling lumat-lumat.",
+                "method_of_use": "Minum 3 pagi.",
+                "spells_or_verses": "Adas manis, pulosari, bawang merah dibambam, kelapa tua dibakar, daun kiwir."
+            }
+        ]
+    },
+    {
+        "disease": "Penyakit Kanak-Kanak (Children's Illnesses)",
+        "category_code": "C",
+        "remedies": [
+            {
+                "id_kod": "2999.C.01.F.01",
+                "ingredients": "Pinang muda, adas manis dan pulasari",
+                "preparation_method": "Giling lumat-lumat, Bagi budak-budak: enapkan dahulu.",
+                "method_of_use": "Minum.",
+                "spells_or_verses": "Pinang muda yang belum bertemu hati, campur dengan adas manis dan pulosari."
+            },
+            {
+                "id_kod": "2999.C.02.F.01",
+                "ingredients": "Kapur laga, cengkih, kulit manis",
+                "preparation_method": "Giling lumat-lumat beri air madu.",
+                "method_of_use": "Minum (Untuk budak kecil).",
+                "spells_or_verses": "Untuk budak kecil."
+            },
+            {
+                "id_kod": "2999.C.02.F.02",
+                "ingredients": "Daun belimbing besi, adas manis dan pulasari, anggur dan bawang putih, jadam dan tanah",
+                "preparation_method": "Giling lumat-lumat.",
+                "method_of_use": "Disapukan pada perut.",
+                "spells_or_verses": "Daun belimbing besi serta kulitnya serta rempahnya adas manis dan pulosari, anggur dan bawang putih, jadam dan tanah."
+            }
+        ]
+    },
+    {
+        "disease": "Penyakit Wanita, Sakit Perut, & Senggugut (Women's Illnesses, Abdominal Pain, Dysmenorrhea)",
+        "category_code": "D",
+        "remedies": [
+            {
+                "id_kod": "2999.D.04.F.06",
+                "ingredients": "Ibu kunyit, liyak merah, garam siam",
+                "preparation_method": "Giling lumat-lumat, air limau nipis.",
+                "method_of_use": "Makan ketika senggugut.",
+                "spells_or_verses": "Alternatif untuk D.04.F.01"
+            },
+            {
+                "id_kod": "2999.D.06.F.01",
+                "ingredients": "Limau nipis, kapur tohor",
+                "preparation_method": "Bubuh kapur tohor pada keratan limau nipis.",
+                "method_of_use": "Taruh pada ulu hati.",
+                "spells_or_verses": "Baca Surah Al-Kauthar sehingga 3 kali / 7 kali."
+            },
+            {
+                "id_kod": "2999.D.06.NF.01",
+                "ingredients": "Air",
+                "preparation_method": "Ambil mangkuk putih, bubuh air.",
+                "method_of_use": "Minum.",
+                "spells_or_verses": "Baca Surah Al-Furqan ayat 32 dan Surah Al-Isra ayat 105-106."
+            },
+            {
+                "id_kod": "2999.D.07.F.06",
+                "ingredients": "Cuka, daun pelaik, jintan hitam, cabai jawa, liyak merah",
+                "preparation_method": "Daun pelaik ditumbuk lumat, ambil patinya dan campur dengan rempah itu, beri air cuka.",
+                "method_of_use": "Makan 3 pagi.",
+                "spells_or_verses": "Hendaklah berurut dahulu sebelum makan ubat."
+            }
+        ]
+    },
+    {
+        "disease": "Basal (Spesific Ailment/Skin Condition)",
+        "category_code": "G",
+        "remedies": [
+            {
+                "id_kod": "2999.G.01.F.01",
+                "ingredients": "Bawang putih, cabai jawa, lada sulah, buah pala",
+                "preparation_method": "Pipis lumat-lumat, gelek.",
+                "method_of_use": "Makan 7 hari.",
+                "spells_or_verses": "Semuanya berat seemas."
+            },
+            {
+                "id_kod": "2999.G.02.F.01",
+                "ingredients": "Cabai jawa, lada sulah, liyak merah, cendana putih, geharu, kayu manis, kapur barus, ketul hutan",
+                "preparation_method": "Biji ketul hutan ditumbuk lumat-lumat, lada sulah direndang tidak sampai hangus, segala ubat dijadikan serbuk menjadi tembakau.",
+                "method_of_use": "Isaplah kedalam hidung.",
+                "spells_or_verses": "Semuanya berat 4 emas kecuali kapur barus hanya sedikit."
+            }
+        ]
+    }
+]
         `;
         
         let medicalData = []; 
@@ -434,7 +474,7 @@
                         <div class="remedies-grid">
                             ${diseaseGroup.remedies.map(remedy => `
                                 <div class="remedy-card">
-                                    <div class="remedy-image-placeholder" data-id="${remedy.category_code}"></div>
+                                    <div class="remedy-image-placeholder" data-id="${diseaseGroup.category_code}"></div>
                                     
                                     <h3>Remedy ID: ${remedy.id_kod}</h3>
                                     <div class="remedy-detail">
@@ -490,7 +530,8 @@
                         remedy.id_kod, 
                         remedy.preparation_method,
                         remedy.method_of_use,
-                        remedy.spells_or_verses
+                        remedy.spells_or_verses,
+                        diseaseGroup.disease
                     ].join(' ').toLowerCase(); 
                     
                     return searchFields.includes(filterText);
@@ -502,11 +543,12 @@
                 if (diseaseMatch) {
                     return {...diseaseGroup, remedies: diseaseGroup.remedies};
                 } else if (filteredRemedies.length > 0) {
+                    // Create a new group object with only the filtered remedies
                     return {...diseaseGroup, remedies: filteredRemedies};
                 }
                 return null;
 
-            }).filter(group => group !== null); // Remove groups that have no matches in disease name or remedies
+            }).filter(group => group !== null); // Remove groups that have no matches
 
             renderRemedies(filteredData);
         }
