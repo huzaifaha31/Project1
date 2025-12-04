@@ -1,37 +1,144 @@
 [
-  {
-    "id": "demam_panas",
-    "penyakit": "Demam Panas Berlarutan",
-    "bahan_ramuan": [
-      "Daun Semambu (Neem)",
-      "Akar Tebu Hitam",
-      "Air Suam"
-    ],
-    "kaedah_penyediaan": "Rebus daun semambu dan akar tebu hitam bersama-sama sehingga mendidih. Biarkan air rebusan suam.",
-    "cara_penggunaan": "Minum satu cawan air rebusan ini dua kali sehari (pagi dan malam). Baki air boleh digunakan untuk lap badan.",
-    "ayat_jampi": "Bismillah. Syafakallahu. Baca Surah Al-Fatihah 7 kali pada air rebusan sebelum diminum."
-  },
-  {
-    "id": "sakit_perut",
-    "penyakit": "Sakit Perut / Kembung",
-    "bahan_ramuan": [
-      "Halia Tua",
-      "Bawang Putih",
-      "Minyak Kelapa Dara"
-    ],
-    "kaedah_penyediaan": "Tumbuk halus halia tua dan bawang putih. Campurkan dengan sedikit minyak kelapa dara hingga menjadi pes.",
-    "cara_penggunaan": "Sapu pes tersebut pada bahagian perut dan pinggang. Urut secara perlahan-lahan mengikut arah jam.",
-    "ayat_jampi": "La Ilaha Illa Anta Subhanaka Inni Kuntu Minaz Zalimin (Doa Nabi Yunus). Tiupkan pada pes sebelum disapu."
-  },
-  {
-    "id": "luka_kulit",
-    "penyakit": "Luka dan Kudis Kulit",
-    "bahan_ramuan": [
-      "Daun Inai Segar",
-      "Kapur Sirih"
-    ],
-    "kaedah_penyediaan": "Tumbuk daun inai segar hingga lumat. Campurkan dengan sedikit kapur sirih.",
-    "cara_penggunaan": "Sapu pes inai ini pada bahagian kulit yang luka atau berkudis. Biarkan kering sebelum dibasuh.",
-    "ayat_jampi": "Tiada bacaan khusus dicatat, gunakan niat yang baik dan doa kesembuhan."
-  }
+    {
+        "disease": "Kelesuan/Sakit Sendi & Badan (Fatigue/Joint & Body Pain)",
+        "category_code": "A",
+        "remedies": [
+            {
+                "id_kod": "2999.A.01.F.01",
+                "ingredients": "Sirih, cekur, lambuknya dan kunyit",
+                "preparation_method": "Pipis lumat-lumat, biarkan semalaman.",
+                "method_of_use": "Bedakkan pada tempat letih, 3 hari.",
+                "spells_or_verses": "14x gagang sirih, cekur, lambuknya, mata kunyit."
+            },
+            {
+                "id_kod": "2999.A.02.F.01",
+                "ingredients": "Buah kemunting, akar semambu, adas, pucuk pulasari, bawang putih, jintan putih dan beras pulut",
+                "preparation_method": "Giling lumat-lumat",
+                "method_of_use": "Bedakkan pada tubuh.",
+                "spells_or_verses": "Buah kemunting 7x7, akar semambu segenggam erat, adas..."
+            },
+            {
+                "id_kod": "2999.A.03.F.01",
+                "ingredients": "Pucuk hawar, cuka",
+                "preparation_method": "Rendam dalam cuka, rebus, tapis.",
+                "method_of_use": "Minum airnya pagi-pagi sebelum makan nasi, 7 hari.",
+                "spells_or_verses": "Jangan makan lemak, manis dan masam hingga yang kelat."
+            },
+            {
+                "id_kod": "2999.A.04.F.01",
+                "ingredients": "Daun maman, daun saga, akar cemanggi, air cuka",
+                "preparation_method": "Pipis bahan dan beri air cuka.",
+                "method_of_use": "Ratakan di tempat yang sakit.",
+                "spells_or_verses": "Daun maman segenggam erat, daun saga segenggam erat."
+            },
+            {
+                "id_kod": "2999.A.05.F.01",
+                "ingredients": "Daun gandarusa, jintan, jintan hitam, bonglai, hujung lambuknya, mata kunyit",
+                "preparation_method": "Pipis, dipais kira-kira hangat sedikit.",
+                "method_of_use": "Ratakan pada pinggang.",
+                "spells_or_verses": "Bonglai 3 hiris, mata kunyit air bermalam. Jintan dengan tangan kiri menghadap kelaut."
+            }
+        ]
+    },
+    {
+        "disease": "Rawatan Dalaman & Pencernaan (Internal & Digestive Treatment)",
+        "category_code": "B",
+        "remedies": [
+            {
+                "id_kod": "2999.B.01.F.01",
+                "ingredients": "Kacang hijau dan pucuk rotan",
+                "preparation_method": "Diapit giling lumat-lumat, beri air pati santan kelapa, campurkan semuanya.",
+                "method_of_use": "Minum 3 pagi.",
+                "spells_or_verses": "Kacang hijau segenggam tarik, pucuk rotan."
+            },
+            {
+                "id_kod": "2999.B.01.F.02",
+                "ingredients": "Adas manis, pulasari, bawang merah, kelapa tua dan daun kiwir",
+                "preparation_method": "Giling lumat-lumat.",
+                "method_of_use": "Minum 3 pagi.",
+                "spells_or_verses": "Adas manis, pulosari, bawang merah dibambam, kelapa tua dibakar, daun kiwir."
+            }
+        ]
+    },
+    {
+        "disease": "Penyakit Kanak-Kanak (Children's Illnesses)",
+        "category_code": "C",
+        "remedies": [
+            {
+                "id_kod": "2999.C.01.F.01",
+                "ingredients": "Pinang muda, adas manis dan pulasari",
+                "preparation_method": "Giling lumat-lumat, Bagi budak-budak: enapkan dahulu.",
+                "method_of_use": "Minum.",
+                "spells_or_verses": "Pinang muda yang belum bertemu hati, campur dengan adas manis dan pulosari."
+            },
+            {
+                "id_kod": "2999.C.02.F.01",
+                "ingredients": "Kapur laga, cengkih, kulit manis",
+                "preparation_method": "Giling lumat-lumat beri air madu.",
+                "method_of_use": "Minum (Untuk budak kecil).",
+                "spells_or_verses": "Untuk budak kecil."
+            },
+            {
+                "id_kod": "2999.C.02.F.02",
+                "ingredients": "Daun belimbing besi, adas manis dan pulasari, anggur dan bawang putih, jadam dan tanah",
+                "preparation_method": "Giling lumat-lumat.",
+                "method_of_use": "Disapukan pada perut.",
+                "spells_or_verses": "Daun belimbing besi serta kulitnya serta rempahnya adas manis dan pulosari, anggur dan bawang putih, jadam dan tanah."
+            }
+        ]
+    },
+    {
+        "disease": "Penyakit Wanita, Sakit Perut, & Senggugut (Women's Illnesses, Abdominal Pain, Dysmenorrhea)",
+        "category_code": "D",
+        "remedies": [
+            {
+                "id_kod": "2999.D.04.F.06",
+                "ingredients": "Ibu kunyit, liyak merah, garam siam",
+                "preparation_method": "Giling lumat-lumat, air limau nipis.",
+                "method_of_use": "Makan ketika senggugut.",
+                "spells_or_verses": "Alternatif untuk D.04.F.01"
+            },
+            {
+                "id_kod": "2999.D.06.F.01",
+                "ingredients": "Limau nipis, kapur tohor",
+                "preparation_method": "Bubuh kapur tohor pada keratan limau nipis.",
+                "method_of_use": "Taruh pada ulu hati.",
+                "spells_or_verses": "Baca Surah Al-Kauthar sehingga 3 kali / 7 kali."
+            },
+            {
+                "id_kod": "2999.D.06.NF.01",
+                "ingredients": "Air",
+                "preparation_method": "Ambil mangkuk putih, bubuh air.",
+                "method_of_use": "Minum.",
+                "spells_or_verses": "Baca Surah Al-Furqan ayat 32 dan Surah Al-Isra ayat 105-106."
+            },
+            {
+                "id_kod": "2999.D.07.F.06",
+                "ingredients": "Cuka, daun pelaik, jintan hitam, cabai jawa, liyak merah",
+                "preparation_method": "Daun pelaik ditumbuk lumat, ambil patinya dan campur dengan rempah itu, beri air cuka.",
+                "method_of_use": "Makan 3 pagi.",
+                "spells_or_verses": "Hendaklah berurut dahulu sebelum makan ubat."
+            }
+        ]
+    },
+    {
+        "disease": "Basal (Spesific Ailment/Skin Condition)",
+        "category_code": "G",
+        "remedies": [
+            {
+                "id_kod": "2999.G.01.F.01",
+                "ingredients": "Bawang putih, cabai jawa, lada sulah, buah pala",
+                "preparation_method": "Pipis lumat-lumat, gelek.",
+                "method_of_use": "Makan 7 hari.",
+                "spells_or_verses": "Semuanya berat seemas."
+            },
+            {
+                "id_kod": "2999.G.02.F.01",
+                "ingredients": "Cabai jawa, lada sulah, liyak merah, cendana putih, geharu, kayu manis, kapur barus, ketul hutan",
+                "preparation_method": "Biji ketul hutan ditumbuk lumat-lumat, lada sulah direndang tidak sampai hangus, segala ubat dijadikan serbuk menjadi tembakau.",
+                "method_of_use": "Isaplah kedalam hidung.",
+                "spells_or_verses": "Semuanya berat 4 emas kecuali kapur barus hanya sedikit."
+            }
+        ]
+    }
 ]
