@@ -1,41 +1,83 @@
-/* --- Global & Typography (unchanged) --- */
-/* ... (Keep existing CSS for body, header, main, footer, and section styling) ... */
-/* ... */
+/* --- Global & Typography --- */
+body {
+    font-family: 'Merriweather', serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F8F4E3; /* Light parchment/cream color */
+    color: #3C1E1B; /* Dark maroon/brown text */
+    line-height: 1.6;
+    /* Placeholder for a textured background image (since external files are disallowed) */
+    /* The color itself provides the "parchment" feel */
+}
 
-/* --- Search Bar & Clear Button Styling (IMPROVED) --- */
+header {
+    background-color: #8B0000; /* Deep Maroon */
+    color: #FFD700; /* Gold/Yellow for contrast */
+    padding: 30px 5%;
+    text-align: center;
+    border-bottom: 5px solid #FFD700;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8em, 5vw, 2.8em);
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-style: italic;
+    font-size: 1.1em;
+    margin-top: 5px;
+}
+
+main {
+    padding: 40px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* --- Search Bar & Clear Button Styling --- */
 .search-container {
     margin-bottom: 30px;
-    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #search-input {
-    width: 80%;
-    max-width: 550px; /* Reduced width to make space for the button */
+    flex-grow: 1;
+    max-width: 550px;
     padding: 15px 20px;
     font-size: 1.1em;
     border: 3px solid #D4A57F; 
-    border-radius: 5px 0 0 5px; /* Rounded on left only */
+    border-right: none;
+    border-radius: 5px 0 0 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s;
     font-family: 'Merriweather', serif;
     color: #3C1E1B;
 }
 
+#search-input:focus {
+    border-color: #8B0000;
+    border-right-color: #8B0000;
+    outline: none;
+}
+
 #clear-search-btn {
     padding: 15px 20px;
-    background-color: #8B0000; /* Deep Maroon */
+    background-color: #8B0000;
     color: white;
     border: 3px solid #8B0000;
-    border-left: none;
-    border-radius: 0 5px 5px 0; /* Rounded on right only */
+    border-radius: 0 5px 5px 0;
     cursor: pointer;
     font-weight: bold;
     font-size: 1.1em;
     transition: background-color 0.2s;
-    display: none; /* Initially hidden, shown by JS */
+    display: none;
+    flex-shrink: 0;
 }
 
 #clear-search-btn:hover {
@@ -43,14 +85,69 @@
 }
 
 .no-results {
-    /* ... (unchanged) ... */
+    text-align: center;
+    font-size: 1.5em;
+    color: #8B0000;
+    margin: 50px 0;
+    padding: 20px;
+    border: 2px dashed #D4A57F;
+    background-color: #FFF0F0;
 }
 
-/* --- Remedy Card Styling (IMPROVED with Image Placeholder) --- */
+/* --- Disease Section Styling --- */
+.disease-section {
+    margin-bottom: 40px;
+    padding: 30px;
+    background-color: #FEFBF1; 
+    border: 1px solid #D4A57F;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.disease-section h2 {
+    font-family: 'Playfair Display', serif;
+    color: #4A2A0C; 
+    border-bottom: 3px double #FFD700;
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-tag {
+    background-color: #964B00;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+
+/* --- Remedy Card Styling --- */
+.remedies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
 .remedy-card {
-    /* ... (Keep existing styles for padding, border, etc.) ... */
+    background-color: #FFFFFF;
+    border: 2px solid #D4A57F;
+    padding: 20px;
+    border-radius: 5px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
+}
+
+.remedy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .remedy-image-placeholder {
@@ -70,31 +167,104 @@
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Specific colors/icons for categories (simulating illustrations) */
 .remedy-image-placeholder::before {
-    content: 'Tumbuh-Tumbuhan';
+    content: 'Tumbuh-Tumbuhan / Ramuan';
 }
 
+/* Specific colors/icons for categories (simulating illustrations) */
 .remedy-image-placeholder[data-id="A"] { /* Kelesuan/Sakit Sendi */
-    background-color: #F0FFF0; /* Honeydew */
+    background-color: #F0FFF0; 
     border-left: 5px solid #006400; /* Dark Green */
 }
 .remedy-image-placeholder[data-id="B"] { /* Rawatan Dalaman */
-    background-color: #FFF5EE; /* SeaShell */
+    background-color: #FFF5EE; 
     border-left: 5px solid #FFA500; /* Orange */
 }
 .remedy-image-placeholder[data-id="C"] { /* Penyakit Kanak-Kanak */
-    background-color: #FFF0F5; /* Lavender Blush */
+    background-color: #FFF0F5; 
     border-left: 5px solid #FF69B4; /* Hot Pink */
 }
 .remedy-image-placeholder[data-id="D"] { /* Penyakit Wanita */
-    background-color: #FAEBD7; /* Antique White */
+    background-color: #FAEBD7; 
     border-left: 5px solid #8B008B; /* Dark Magenta */
 }
 .remedy-image-placeholder[data-id="G"] { /* Basal */
-    background-color: #FDF5E6; /* Old Lace */
+    background-color: #FDF5E6; 
     border-left: 5px solid #00008B; /* Dark Blue */
 }
 
-/* --- Other elements (unchanged) --- */
-/* ... */
+.remedy-card h3 {
+    color: #8B0000;
+    font-size: 1.2em;
+    border-bottom: 1px dashed #D4A57F;
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.remedy-detail strong {
+    color: #333;
+    display: block;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.remedy-detail p {
+    margin: 5px 0 0 0;
+    padding-left: 15px;
+    border-left: 3px solid #708090; 
+}
+
+.spell-section {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #FFFACD;
+    border: 1px solid #FFD700;
+}
+
+.spell-text {
+    font-style: italic;
+    color: #006400; 
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #D4A57F;
+    color: #3C1E1B;
+    font-size: 0.9em;
+    border-top: 1px solid #FFD700;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .remedies-grid {
+        grid-template-columns: 1fr;
+    }
+    header h1 {
+        font-size: 2em;
+    }
+    .disease-section h2 {
+        font-size: 1.5em;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .category-tag {
+        margin-top: 10px;
+    }
+    .search-container {
+        flex-direction: column;
+    }
+    #search-input {
+        max-width: 100%;
+        width: 100%;
+        border-radius: 5px;
+        border-right: 3px solid #D4A57F; 
+    }
+    #clear-search-btn {
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+}
