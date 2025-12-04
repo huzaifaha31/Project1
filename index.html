@@ -548,7 +548,7 @@
             selectedClassification = '';
             selectedRemedyGroup = null;
             document.getElementById('search-bar').style.display = 'none';
-            document.getElementById('navigation-area').innerHTML = '<h2 class="view-title">1. Pilih Klasifikasi Tubuh Badan</h2>';
+            document.getElementById('navigation-area').innerHTML = '<h2 class="view-title">Klasifikasi Kategori atau Tubuh Badan</h2>';
             const container = document.getElementById('disease-list');
             container.innerHTML = '';
 
@@ -576,7 +576,7 @@
             // Add Back Button and Title
             document.getElementById('navigation-area').innerHTML = `
                 <button class="back-button" onclick="showClassificationView()">← Kembali</button>
-                <h2 class="view-title">2. Pilih Penyakit untuk ${classification}</h2>
+                <h2 class="view-title">Penyakit untuk ${classification}</h2>
             `;
             
             const navContainer = document.createElement('div');
@@ -606,7 +606,7 @@
             // Add Back Button and Title
             document.getElementById('navigation-area').innerHTML = `
                 <button class="back-button" onclick="showDiseaseView('${selectedClassification}')">← Kembali</button>
-                <h2 class="view-title">3. Resipi untuk: ${group.disease}</h2>
+                <h2 class="view-title">Resipi untuk: ${group.disease}</h2>
             `;
 
             renderRemedies([group]); // Render the remedies for the selected group
@@ -707,3 +707,4 @@
     </script>
 </body>
 </html>
+
