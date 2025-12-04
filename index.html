@@ -4,8 +4,279 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Malay Medical Manuscript Exploration</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Global & Typography --- */
+        body {
+            font-family: 'Merriweather', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F8F4E3; /* Light parchment/cream color */
+            color: #3C1E1B; /* Dark maroon/brown text */
+            line-height: 1.6;
+            /* Placeholder for a textured background image (since external files are disallowed) */
+            /* The color itself provides the "parchment" feel */
+        }
+
+        header {
+            background-color: #8B0000; /* Deep Maroon */
+            color: #FFD700; /* Gold/Yellow for contrast */
+            padding: 30px 5%;
+            text-align: center;
+            border-bottom: 5px solid #FFD700;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8em, 5vw, 2.8em);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-style: italic;
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        main {
+            padding: 40px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* --- Search Bar & Clear Button Styling --- */
+        .search-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #search-input {
+            flex-grow: 1;
+            max-width: 550px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 3px solid #D4A57F; 
+            border-right: none;
+            border-radius: 5px 0 0 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s;
+            font-family: 'Merriweather', serif;
+            color: #3C1E1B;
+        }
+
+        #search-input:focus {
+            border-color: #8B0000;
+            border-right-color: #8B0000;
+            outline: none;
+        }
+        
+        #clear-search-btn {
+            padding: 15px 20px;
+            background-color: #8B0000;
+            color: white;
+            border: 3px solid #8B0000;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.2s;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        #clear-search-btn:hover {
+            background-color: #A52A2A;
+        }
+        
+        .no-results {
+            text-align: center;
+            font-size: 1.5em;
+            color: #8B0000;
+            margin: 50px 0;
+            padding: 20px;
+            border: 2px dashed #D4A57F;
+            background-color: #FFF0F0;
+        }
+
+        /* --- Disease Section Styling --- */
+        .disease-section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: #FEFBF1; 
+            border: 1px solid #D4A57F;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .disease-section h2 {
+            font-family: 'Playfair Display', serif;
+            color: #4A2A0C; 
+            border-bottom: 3px double #FFD700;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-tag {
+            background-color: #964B00;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        /* --- Remedy Card Styling --- */
+        .remedies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .remedy-card {
+            background-color: #FFFFFF;
+            border: 2px solid #D4A57F;
+            padding: 20px;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .remedy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .remedy-image-placeholder {
+            height: 120px;
+            margin-bottom: 15px;
+            border-radius: 3px;
+            background-color: #F8F4E3;
+            border: 1px solid #D4A57F;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            color: #4A2A0C;
+            font-style: italic;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .remedy-image-placeholder::before {
+            content: 'Tumbuh-Tumbuhan / Ramuan';
+        }
+
+        /* Specific colors/icons for categories (simulating illustrations) */
+        .remedy-image-placeholder[data-id="A"] { /* Kelesuan/Sakit Sendi */
+            background-color: #F0FFF0; 
+            border-left: 5px solid #006400; /* Dark Green */
+        }
+        .remedy-image-placeholder[data-id="B"] { /* Rawatan Dalaman */
+            background-color: #FFF5EE; 
+            border-left: 5px solid #FFA500; /* Orange */
+        }
+        .remedy-image-placeholder[data-id="C"] { /* Penyakit Kanak-Kanak */
+            background-color: #FFF0F5; 
+            border-left: 5px solid #FF69B4; /* Hot Pink */
+        }
+        .remedy-image-placeholder[data-id="D"] { /* Penyakit Wanita */
+            background-color: #FAEBD7; 
+            border-left: 5px solid #8B008B; /* Dark Magenta */
+        }
+        .remedy-image-placeholder[data-id="G"] { /* Basal */
+            background-color: #FDF5E6; 
+            border-left: 5px solid #00008B; /* Dark Blue */
+        }
+
+        .remedy-card h3 {
+            color: #8B0000;
+            font-size: 1.2em;
+            border-bottom: 1px dashed #D4A57F;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .remedy-detail strong {
+            color: #333;
+            display: block;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        .remedy-detail p {
+            margin: 5px 0 0 0;
+            padding-left: 15px;
+            border-left: 3px solid #708090; 
+        }
+
+        .spell-section {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #FFFACD;
+            border: 1px solid #FFD700;
+        }
+
+        .spell-text {
+            font-style: italic;
+            color: #006400; 
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #D4A57F;
+            color: #3C1E1B;
+            font-size: 0.9em;
+            border-top: 1px solid #FFD700;
+        }
+        
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 768px) {
+            .remedies-grid {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            .disease-section h2 {
+                font-size: 1.5em;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .category-tag {
+                margin-top: 10px;
+            }
+            .search-container {
+                flex-direction: column;
+            }
+            #search-input {
+                max-width: 100%;
+                width: 100%;
+                border-radius: 5px;
+                border-right: 3px solid #D4A57F; 
+            }
+            #clear-search-btn {
+                width: 100%;
+                margin-top: 10px;
+                border-radius: 5px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,10 +285,12 @@
     </header>
 
     <main id="manuscript-data-container">
+        <!-- Search Bar with Clear Button -->
         <div class="search-container">
             <input type="text" id="search-input" placeholder="Cari penyakit, bahan, atau ID..." onkeyup="filterRemedies()">
             <button id="clear-search-btn" onclick="clearSearch()">X</button>
         </div>
+        
         <div id="disease-list"></div>
     </main>
 
@@ -26,16 +299,123 @@
     </footer>
 
     <script>
+        // Embedded JSON Data
+        const JSON_DATA_STRING = `
+            [
+                {
+                    "disease": "Kelesuan/Sakit Sendi (Fatigue/Joint Pain)",
+                    "category_code": "A",
+                    "remedies": [
+                        {
+                            "id_kod": "2999.A.01.F.01",
+                            "ingredients": "Sirih, cekur, lambuknya dan kunyit",
+                            "preparation_method": "Pipis lumat-lumat, biarkan semalaman.",
+                            "method_of_use": "Bedakkan pada tempat letih, 3 hari.",
+                            "spells_or_verses": "14x gagang sirih, cekur, lambuknya, mata kunyit."
+                        },
+                        {
+                            "id_kod": "2999.A.04.F.01",
+                            "ingredients": "Daun maman, daun saga, akar cemanggi, air cuka",
+                            "preparation_method": "Pipis bahan dan beri air cuka.",
+                            "method_of_use": "Ratakan di tempat yang sakit.",
+                            "spells_or_verses": "Daun maman segenggam erat, daun saga segenggam erat."
+                        }
+                    ]
+                },
+                {
+                    "disease": "Rawatan Dalaman/Pencernaan (Internal/Digestive Treatment)",
+                    "category_code": "B",
+                    "remedies": [
+                        {
+                            "id_kod": "2999.B.01.F.01",
+                            "ingredients": "Kacang hijau dan pucuk rotan",
+                            "preparation_method": "Diapit giling lumat-lumat, beri air pati santan kelapa, campurkan semuanya.",
+                            "method_of_use": "Minum 3 pagi.",
+                            "spells_or_verses": "Kacang hijau segenggam tarik, pucuk rotan."
+                        },
+                        {
+                            "id_kod": "2999.B.01.F.02",
+                            "ingredients": "Adas manis, pulasari, bawang merah, kelapa tua dan daun kiwir",
+                            "preparation_method": "Giling lumat-lumat.",
+                            "method_of_use": "Minum 3 pagi.",
+                            "spells_or_verses": "Bawang merah dibambam, kelapa tua dibakar."
+                        }
+                    ]
+                },
+                {
+                    "disease": "Penyakit Kanak-Kanak (Children's Illnesses)",
+                    "category_code": "C",
+                    "remedies": [
+                        {
+                            "id_kod": "2999.C.01.F.01",
+                            "ingredients": "Pinang muda, adas manis dan pulasari",
+                            "preparation_method": "Giling lumat-lumat, Bagi budak-budak: enapkan dahulu.",
+                            "method_of_use": "Minum.",
+                            "spells_or_verses": "Pinang muda yang belum bertemu hati, campur dengan adas manis dan pulosari."
+                        },
+                        {
+                            "id_kod": "2999.C.02.F.01",
+                            "ingredients": "Kapur laga, cengkih, kulit manis",
+                            "preparation_method": "Giling lumat-lumat beri air madu.",
+                            "method_of_use": "Minum (Untuk budak kecil).",
+                            "spells_or_verses": ""
+                        }
+                    ]
+                },
+                {
+                    "disease": "Penyakit Wanita/Sakit Perut/Senggugut (Women's/Abdominal Illnesses)",
+                    "category_code": "D",
+                    "remedies": [
+                        {
+                            "id_kod": "2999.D.04.F.06",
+                            "ingredients": "Ibu kunyit, liyak merah, garam siam",
+                            "preparation_method": "Giling lumat-lumat, air limau nipis.",
+                            "method_of_use": "Makan ketika senggugut.",
+                            "spells_or_verses": ""
+                        },
+                        {
+                            "id_kod": "2999.D.06.F.01",
+                            "ingredients": "Limau nipis, kapur tohor",
+                            "preparation_method": "Bubuh kapur tohor pada keratan limau nipis.",
+                            "method_of_use": "Taruh pada ulu hati.",
+                            "spells_or_verses": "Baca Surah Al-Kauthar sehingga 3 kali / 7 kali."
+                        },
+                        {
+                            "id_kod": "2999.D.06.NF.01",
+                            "ingredients": "Air",
+                            "preparation_method": "Ambil mangkuk putih, bubuh air.",
+                            "method_of_use": "Minum.",
+                            "spells_or_verses": "Baca Surah Al-Furqan ayat 32 dan Surah Al-Isra ayat 105-106."
+                        }
+                    ]
+                },
+                {
+                    "disease": "Basal (A Specific Ailment)",
+                    "category_code": "G",
+                    "remedies": [
+                        {
+                            "id_kod": "2999.G.01.F.01",
+                            "ingredients": "Bawang putih, cabai jawa, lada sulah, buah pala",
+                            "preparation_method": "Pipis lumat-lumat, gelek.",
+                            "method_of_use": "Makan 7 hari.",
+                            "spells_or_verses": "Semuanya berat seemas."
+                        }
+                    ]
+                }
+            ]
+        `;
+        
         let medicalData = []; 
         
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('data.json')
-                .then(response => response.json())
-                .then(data => {
-                    medicalData = data; 
-                    renderRemedies(medicalData);
-                })
-                .catch(error => console.error('Error fetching data:', error));
+            try {
+                // Parse the embedded JSON string
+                medicalData = JSON.parse(JSON_DATA_STRING.trim());
+                renderRemedies(medicalData);
+            } catch (e) {
+                console.error("Failed to parse JSON data:", e);
+                document.getElementById('disease-list').innerHTML = '<p class="no-results" style="border-color: red;">Error: Failed to load manuscript data.</p>';
+            }
 
             // Initial state for clear button
             document.getElementById('clear-search-btn').style.display = 'none';
@@ -43,7 +423,7 @@
 
         function renderRemedies(data) {
             const container = document.getElementById('disease-list');
-            container.innerHTML = ''; 
+            container.innerHTML = ''; // Clear previous content
 
             data.forEach(diseaseGroup => {
                 if (diseaseGroup.remedies && diseaseGroup.remedies.length > 0) {
@@ -81,6 +461,7 @@
                 }
             });
             
+            // Display a message if no results are found
             if (container.children.length === 0) {
                  container.innerHTML = '<p class="no-results">Tiada hasil yang sepadan dengan carian anda.</p>';
             }
@@ -103,6 +484,7 @@
                 const diseaseMatch = diseaseGroup.disease.toLowerCase().includes(filterText);
 
                 const filteredRemedies = diseaseGroup.remedies.filter(remedy => {
+                    // Search across all text fields of the remedy
                     const searchFields = [
                         remedy.ingredients, 
                         remedy.id_kod, 
@@ -114,8 +496,9 @@
                     return searchFields.includes(filterText);
                 });
 
-                // Display the group if the disease name matches, OR if remedies match.
-                // If the disease name matches, show all remedies for that disease.
+                // Logic: 
+                // 1. If the disease name matches, show the entire group of remedies.
+                // 2. Otherwise, if there are matching remedies inside, show only those remedies.
                 if (diseaseMatch) {
                     return {...diseaseGroup, remedies: diseaseGroup.remedies};
                 } else if (filteredRemedies.length > 0) {
@@ -123,7 +506,7 @@
                 }
                 return null;
 
-            }).filter(group => group !== null);
+            }).filter(group => group !== null); // Remove groups that have no matches in disease name or remedies
 
             renderRemedies(filteredData);
         }
