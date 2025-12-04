@@ -1,0 +1,37 @@
+[
+  {
+    "id": "demam_panas",
+    "penyakit": "Demam Panas Berlarutan",
+    "bahan_ramuan": [
+      "Daun Semambu (Neem)",
+      "Akar Tebu Hitam",
+      "Air Suam"
+    ],
+    "kaedah_penyediaan": "Rebus daun semambu dan akar tebu hitam bersama-sama sehingga mendidih. Biarkan air rebusan suam.",
+    "cara_penggunaan": "Minum satu cawan air rebusan ini dua kali sehari (pagi dan malam). Baki air boleh digunakan untuk lap badan.",
+    "ayat_jampi": "Bismillah. Syafakallahu. Baca Surah Al-Fatihah 7 kali pada air rebusan sebelum diminum."
+  },
+  {
+    "id": "sakit_perut",
+    "penyakit": "Sakit Perut / Kembung",
+    "bahan_ramuan": [
+      "Halia Tua",
+      "Bawang Putih",
+      "Minyak Kelapa Dara"
+    ],
+    "kaedah_penyediaan": "Tumbuk halus halia tua dan bawang putih. Campurkan dengan sedikit minyak kelapa dara hingga menjadi pes.",
+    "cara_penggunaan": "Sapu pes tersebut pada bahagian perut dan pinggang. Urut secara perlahan-lahan mengikut arah jam.",
+    "ayat_jampi": "La Ilaha Illa Anta Subhanaka Inni Kuntu Minaz Zalimin (Doa Nabi Yunus). Tiupkan pada pes sebelum disapu."
+  },
+  {
+    "id": "luka_kulit",
+    "penyakit": "Luka dan Kudis Kulit",
+    "bahan_ramuan": [
+      "Daun Inai Segar",
+      "Kapur Sirih"
+    ],
+    "kaedah_penyediaan": "Tumbuk daun inai segar hingga lumat. Campurkan dengan sedikit kapur sirih.",
+    "cara_penggunaan": "Sapu pes inai ini pada bahagian kulit yang luka atau berkudis. Biarkan kering sebelum dibasuh.",
+    "ayat_jampi": "Tiada bacaan khusus dicatat, gunakan niat yang baik dan doa kesembuhan."
+  }
+]
