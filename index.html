@@ -3,35 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eksplorasi Manuskrip Perubatan Melayu</title>
-    <link rel="stylesheet" href="style.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <title>Malay Medical Manuscript Exploration</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>Eksplorasi Manuskrip Perubatan Melayu 📜</h1>
-        <p>Menyingkap Rahsia Perubatan Tradisional Nusantara</p>
+        <h1>Malay Medical Manuscript Exploration</h1>
+        <p>Jelajahi Resipi Perubatan Tradisional Nusantara</p>
     </header>
 
-    <main class="container">
-        <aside class="sidebar">
-            <h2>Senarai Penyakit</h2>
-            <ul id="senarai-penyakit">
-                </ul>
-        </aside>
-
-        <section class="content-display">
-            <h2>Butiran Rawatan Manuskrip</h2>
-            <div id="butiran-rawatan">
-                <p>Sila pilih penyakit dari senarai di sebelah kiri untuk melihat butiran rawatan dari manuskrip.</p>
-                </div>
-        </section>
+    <main id="manuscript-data-container">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Cari penyakit, bahan, atau ID..." onkeyup="filterRemedies()">
+            <button id="clear-search-btn" onclick="clearSearch()">X</button>
+        </div>
+        <div id="disease-list"></div>
     </main>
 
     <footer>
-        <p>&copy; 2024 Projek Digitalisasi Manuskrip Melayu | Sumber: Manuskrip Pilihan</p>
+        <p>&copy; 2024 Manuskrip Perubatan Melayu. Data berdasarkan MSS2999.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        let medicalData = []; 
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    medicalData = data; 
+                    renderRemedies(medicalData);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+
+            // Initial state for clear button
+            document.getElementById('clear-search-btn').style.display = 'none';
+        });
+
+        function renderRemedies(data) {
+            const container = document.getElementById('disease-list');
+            container.innerHTML = ''; 
+
+            data.forEach(diseaseGroup => {
+                if (diseaseGroup.remedies && diseaseGroup.remedies.length > 0) {
+                    const diseaseSection = document.createElement('section');
+                    diseaseSection.className = 'disease-section';
+                    diseaseSection.innerHTML = `
+                        <h2>${diseaseGroup.disease} <span class="category-tag">${diseaseGroup.category_code}</span></h2>
+                        <div class="remedies-grid">
+                            ${diseaseGroup.remedies.map(remedy => `
+                                <div class="remedy-card">
+                                    <div class="remedy-image-placeholder" data-id="${remedy.category_code}"></div>
+                                    
+                                    <h3>Remedy ID: ${remedy.id_kod}</h3>
+                                    <div class="remedy-detail">
+                                        <strong>Bahan Digunakan (Ingredients):</strong>
+                                        <p>${remedy.ingredients}</p>
+                                    </div>
+                                    <div class="remedy-detail">
+                                        <strong>Kaedah Penyediaan (Preparation Method):</strong>
+                                        <p>${remedy.preparation_method}</p>
+                                    </div>
+                                    <div class="remedy-detail">
+                                        <strong>Cara Penggunaan (Method of Use):</strong>
+                                        <p>${remedy.method_of_use}</p>
+                                    </div>
+                                    <div class="remedy-detail spell-section">
+                                        <strong>Jampi / Petua (Spells/Verses):</strong>
+                                        <p class="spell-text">${remedy.spells_or_verses || 'Tiada Jampi/Petua Direkodkan'}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    container.appendChild(diseaseSection);
+                }
+            });
+            
+            if (container.children.length === 0) {
+                 container.innerHTML = '<p class="no-results">Tiada hasil yang sepadan dengan carian anda.</p>';
+            }
+        }
+        
+        function filterRemedies() {
+            const input = document.getElementById('search-input');
+            const clearBtn = document.getElementById('clear-search-btn');
+            const filterText = input.value.toLowerCase().trim();
+
+            // Toggle clear button visibility
+            clearBtn.style.display = filterText ? 'block' : 'none';
+            
+            if (filterText === "") {
+                renderRemedies(medicalData);
+                return;
+            }
+
+            const filteredData = medicalData.map(diseaseGroup => {
+                const diseaseMatch = diseaseGroup.disease.toLowerCase().includes(filterText);
+
+                const filteredRemedies = diseaseGroup.remedies.filter(remedy => {
+                    const searchFields = [
+                        remedy.ingredients, 
+                        remedy.id_kod, 
+                        remedy.preparation_method,
+                        remedy.method_of_use,
+                        remedy.spells_or_verses
+                    ].join(' ').toLowerCase(); 
+                    
+                    return searchFields.includes(filterText);
+                });
+
+                // Display the group if the disease name matches, OR if remedies match.
+                // If the disease name matches, show all remedies for that disease.
+                if (diseaseMatch) {
+                    return {...diseaseGroup, remedies: diseaseGroup.remedies};
+                } else if (filteredRemedies.length > 0) {
+                    return {...diseaseGroup, remedies: filteredRemedies};
+                }
+                return null;
+
+            }).filter(group => group !== null);
+
+            renderRemedies(filteredData);
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('clear-search-btn').style.display = 'none';
+            filterRemedies(); // Re-render all data
+        }
+    </script>
 </body>
 </html>
