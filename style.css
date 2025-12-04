@@ -1,37 +1,100 @@
-[
-  {
-    "id": "demam_panas",
-    "penyakit": "Demam Panas Berlarutan",
-    "bahan_ramuan": [
-      "Daun Semambu (Neem)",
-      "Akar Tebu Hitam",
-      "Air Suam"
-    ],
-    "kaedah_penyediaan": "Rebus daun semambu dan akar tebu hitam bersama-sama sehingga mendidih. Biarkan air rebusan suam.",
-    "cara_penggunaan": "Minum satu cawan air rebusan ini dua kali sehari (pagi dan malam). Baki air boleh digunakan untuk lap badan.",
-    "ayat_jampi": "Bismillah. Syafakallahu. Baca Surah Al-Fatihah 7 kali pada air rebusan sebelum diminum."
-  },
-  {
-    "id": "sakit_perut",
-    "penyakit": "Sakit Perut / Kembung",
-    "bahan_ramuan": [
-      "Halia Tua",
-      "Bawang Putih",
-      "Minyak Kelapa Dara"
-    ],
-    "kaedah_penyediaan": "Tumbuk halus halia tua dan bawang putih. Campurkan dengan sedikit minyak kelapa dara hingga menjadi pes.",
-    "cara_penggunaan": "Sapu pes tersebut pada bahagian perut dan pinggang. Urut secara perlahan-lahan mengikut arah jam.",
-    "ayat_jampi": "La Ilaha Illa Anta Subhanaka Inni Kuntu Minaz Zalimin (Doa Nabi Yunus). Tiupkan pada pes sebelum disapu."
-  },
-  {
-    "id": "luka_kulit",
-    "penyakit": "Luka dan Kudis Kulit",
-    "bahan_ramuan": [
-      "Daun Inai Segar",
-      "Kapur Sirih"
-    ],
-    "kaedah_penyediaan": "Tumbuk daun inai segar hingga lumat. Campurkan dengan sedikit kapur sirih.",
-    "cara_penggunaan": "Sapu pes inai ini pada bahagian kulit yang luka atau berkudis. Biarkan kering sebelum dibasuh.",
-    "ayat_jampi": "Tiada bacaan khusus dicatat, gunakan niat yang baik dan doa kesembuhan."
-  }
-]
+/* --- Global & Typography (unchanged) --- */
+/* ... (Keep existing CSS for body, header, main, footer, and section styling) ... */
+/* ... */
+
+/* --- Search Bar & Clear Button Styling (IMPROVED) --- */
+.search-container {
+    margin-bottom: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#search-input {
+    width: 80%;
+    max-width: 550px; /* Reduced width to make space for the button */
+    padding: 15px 20px;
+    font-size: 1.1em;
+    border: 3px solid #D4A57F; 
+    border-radius: 5px 0 0 5px; /* Rounded on left only */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+    font-family: 'Merriweather', serif;
+    color: #3C1E1B;
+}
+
+#clear-search-btn {
+    padding: 15px 20px;
+    background-color: #8B0000; /* Deep Maroon */
+    color: white;
+    border: 3px solid #8B0000;
+    border-left: none;
+    border-radius: 0 5px 5px 0; /* Rounded on right only */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.2s;
+    display: none; /* Initially hidden, shown by JS */
+}
+
+#clear-search-btn:hover {
+    background-color: #A52A2A;
+}
+
+.no-results {
+    /* ... (unchanged) ... */
+}
+
+/* --- Remedy Card Styling (IMPROVED with Image Placeholder) --- */
+.remedy-card {
+    /* ... (Keep existing styles for padding, border, etc.) ... */
+    display: flex;
+    flex-direction: column;
+}
+
+.remedy-image-placeholder {
+    height: 120px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    background-color: #F8F4E3;
+    border: 1px solid #D4A57F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    color: #4A2A0C;
+    font-style: italic;
+    font-size: 0.9em;
+    font-weight: bold;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Specific colors/icons for categories (simulating illustrations) */
+.remedy-image-placeholder::before {
+    content: 'Tumbuh-Tumbuhan';
+}
+
+.remedy-image-placeholder[data-id="A"] { /* Kelesuan/Sakit Sendi */
+    background-color: #F0FFF0; /* Honeydew */
+    border-left: 5px solid #006400; /* Dark Green */
+}
+.remedy-image-placeholder[data-id="B"] { /* Rawatan Dalaman */
+    background-color: #FFF5EE; /* SeaShell */
+    border-left: 5px solid #FFA500; /* Orange */
+}
+.remedy-image-placeholder[data-id="C"] { /* Penyakit Kanak-Kanak */
+    background-color: #FFF0F5; /* Lavender Blush */
+    border-left: 5px solid #FF69B4; /* Hot Pink */
+}
+.remedy-image-placeholder[data-id="D"] { /* Penyakit Wanita */
+    background-color: #FAEBD7; /* Antique White */
+    border-left: 5px solid #8B008B; /* Dark Magenta */
+}
+.remedy-image-placeholder[data-id="G"] { /* Basal */
+    background-color: #FDF5E6; /* Old Lace */
+    border-left: 5px solid #00008B; /* Dark Blue */
+}
+
+/* --- Other elements (unchanged) --- */
+/* ... */
